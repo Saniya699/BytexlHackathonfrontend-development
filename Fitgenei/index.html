@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalized Healthy Diet & Fitness Planner</title>
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="light-theme">
+  <div class="app-wrapper">
+  
+    <header class="top-nav">
+      <div class="brand">
+        <span class="brand-logo">
+          <i class="fa-solid fa-dumbbell"></i>
+        </span>
+        <div class="brand-text">
+          <span class="brand-title">Fitgenei</span>
+          <span class="brand-subtitle">Personalized Diet & Fitness Planner</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button id="themeToggle" class="icon-button" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="#planner" class="primary-button ghost-button nav-cta">
+          Start Your Plan
+        </a>
+      </div>
+    </header>
+
+   
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="hero-text">
+          <p class="badge">Front-End Hackathon Project</p>
+          <h1>
+            <span>Healthy Diet</span> &amp; <span>Fitness Planner</span>
+          </h1>
+          <p class="hero-subtitle">
+            Get a smart, customized daily plan for your body type, goals, and lifestyle.
+            Track your progress, stay motivated, and make healthy habits stick.
+          </p>
+          <div class="hero-actions">
+            <a href="#planner" class="primary-button">
+              <i class="fa-solid fa-bolt"></i>
+              Start Your Plan
+            </a>
+            <button id="scrollToProgress" class="secondary-button">
+              <i class="fa-solid fa-chart-line"></i>
+              View Progress
+            </button>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric">
+              <span class="metric-value" data-countup>1200+</span>
+              <span class="metric-label">Personalized Plans</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value" data-countup>98%</span>
+              <span class="metric-label">User Satisfaction</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value" data-countup>7</span>
+              <span class="metric-label">Day Smart Planner</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="glass-card highlight-card">
+            <div class="highlight-row">
+              <span class="chip chip-goal">
+                <i class="fa-solid fa-bullseye"></i> Goal: <span id="heroGoalLabel">Maintain</span>
+              </span>
+              <span class="chip chip-activity">
+                <i class="fa-solid fa-person-running"></i> <span id="heroActivityLabel">Moderate</span>
+              </span>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="hero-stat-label">BMI</span>
+                <span id="heroBmi" class="hero-stat-value">--</span>
+                <span id="heroBmiStatus" class="hero-stat-pill">Awaiting data</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-label">Daily Calories</span>
+                <span id="heroCalories" class="hero-stat-value">--</span>
+                <span class="hero-stat-pill hero-stat-pill-muted">kcal / day</span>
+              </div>
+            </div>
+            <div class="hero-mini-chart">
+              <div class="hero-water">
+                <span class="hero-water-value" id="heroWaterIntake">-- L</span>
+                <span class="hero-water-label">Recommended Water</span>
+              </div>
+              <div class="hero-steps">
+                <span class="hero-steps-value" id="heroSteps">0</span>
+                <span class="hero-steps-label">Simulated Steps</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card quote-card">
+            <div class="quote-header">
+              <span class="chip chip-quote">
+                <i class="fa-solid fa-quote-left"></i> Daily Motivation
+              </span>
+              <button id="newQuoteBtn" class="icon-button small" aria-label="New quote">
+                <i class="fa-solid fa-rotate"></i>
+              </button>
+            </div>
+            <p id="quoteText" class="quote-text">
+              Your body achieves what your mind believes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>Scroll to personalize</span>
+        <i class="fa-solid fa-angles-down"></i>
+      </div>
+    </section>
+
+  
+    <main id="planner" class="planner">
+      <section class="planner-grid">
+        
+        <section class="card user-form-card">
+          <header class="card-header">
+            <h2>
+              <i class="fa-solid fa-user-gear"></i>
+              Your Body Profile
+            </h2>
+            <p>Fill these details to generate your personalized plan.</p>
+          </header>
+
+          <form id="profileForm" class="form-grid">
+            <div class="form-group">
+              <label for="age">Age (years)</label>
+              <input type="number" id="age" min="10" max="100" required placeholder="e.g. 25" />
+            </div>
+
+            <div class="form-group">
+              <label>Gender</label>
+              <div class="segmented-control">
+                <label>
+                  <input type="radio" name="gender" value="male" checked />
+                  <span><i class="fa-solid fa-person"></i> Male</span>
+                </label>
+                <label>
+                  <input type="radio" name="gender" value="female" />
+                  <span><i class="fa-solid fa-person-dress"></i> Female</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="height">Height (cm)</label>
+              <input type="number" id="height" min="120" max="220" required placeholder="e.g. 170" />
+            </div>
+
+            <div class="form-group">
+              <label for="weight">Weight (kg)</label>
+              <input type="number" id="weight" min="30" max="200" required placeholder="e.g. 65" />
+            </div>
+
+            <div class="form-group">
+              <label for="activity">Activity Level</label>
+              <select id="activity" required>
+                <option value="sedentary">Sedentary (little or no exercise)</option>
+                <option value="moderate" selected>Moderate (3–4 workouts/week)</option>
+                <option value="active">Active (5+ workouts/week)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="goal">Goal</label>
+              <select id="goal" required>
+                <option value="loss">Weight Loss</option>
+                <option value="gain">Weight Gain</option>
+                <option value="maintain" selected>Maintain</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label>Diet Preference</label>
+              <div class="segmented-control">
+                <label>
+                  <input type="radio" name="dietPreference" value="mixed" checked />
+                  <span><i class="fa-solid fa-utensils"></i> Mixed</span>
+                </label>
+                <label>
+                  <input type="radio" name="dietPreference" value="veg" />
+                  <span><i class="fa-solid fa-seedling"></i> Veg</span>
+                </label>
+                <label>
+                  <input type="radio" name="dietPreference" value="nonveg" />
+                  <span><i class="fa-solid fa-drumstick-bite"></i> Non-veg</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-actions full-width">
+              <button type="submit" class="primary-button expanded">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Generate My Plan
+              </button>
+              <button type="button" id="resetProfile" class="secondary-button">
+                <i class="fa-solid fa-rotate-left"></i>
+                Reset
+              </button>
+            </div>
+          </form>
+        </section>
+
+       
+        <section class="results-column">
+          <div class="card stats-card">
+            <header class="card-header">
+              <h2>
+                <i class="fa-solid fa-heart-pulse"></i>
+                Health Snapshot
+              </h2>
+              <p>Based on your current profile.</p>
+            </header>
+            <div class="stats-grid">
+              <div class="stat-tile">
+                <p class="stat-label">BMI</p>
+                <p id="bmiValue" class="stat-value">--</p>
+                <p id="bmiStatus" class="stat-chip muted">Not calculated</p>
+              </div>
+              <div class="stat-tile">
+                <p class="stat-label">Calorie Needs</p>
+                <p id="calorieValue" class="stat-value">--</p>
+                <p class="stat-chip">kcal / day</p>
+              </div>
+              <div class="stat-tile">
+                <p class="stat-label">Water Intake</p>
+                <p id="waterValue" class="stat-value">--</p>
+                <p class="stat-chip">liters / day</p>
+              </div>
+              <div class="stat-tile">
+                <p class="stat-label">Recommended Steps</p>
+                <p id="stepsSuggestion" class="stat-value">--</p>
+                <p class="stat-chip">per day</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card diet-card">
+            <header class="card-header">
+              <h2>
+                <i class="fa-solid fa-bowl-rice"></i>
+                Personalized Diet Plan
+              </h2>
+              <p>Balanced meals to support your goal.</p>
+            </header>
+            <div id="dietPlan" class="diet-grid">
+           
+            </div>
+          </div>
+
+          <div class="card workout-card">
+            <header class="card-header">
+              <h2>
+                <i class="fa-solid fa-person-running"></i>
+                Weekly Workout Plan
+              </h2>
+              <p>Simple and sustainable workouts for the next 7 days.</p>
+            </header>
+            <div id="workoutPlan" class="workout-grid">
+        
+            </div>
+          </div>
+        </section>
+      </section>
+
+   
+      <section id="progressSection" class="progress-layout">
+        <section class="card progress-card">
+          <header class="card-header">
+            <h2>
+              <i class="fa-solid fa-chart-line"></i>
+              Progress Tracker
+            </h2>
+            <p>Log your weight to visualize your journey.</p>
+          </header>
+
+          <div class="progress-controls">
+            <div class="form-group">
+              <label for="logDate">Date</label>
+              <input type="date" id="logDate" />
+            </div>
+            <div class="form-group">
+              <label for="logWeight">Weight (kg)</label>
+              <input type="number" id="logWeight" min="30" max="200" placeholder="Today's weight" />
+            </div>
+            <button id="addLogBtn" class="primary-button">
+              <i class="fa-solid fa-plus"></i>
+              Add Entry
+            </button>
+            <button id="clearLogsBtn" class="secondary-button ghost">
+              <i class="fa-solid fa-trash"></i>
+              Clear All
+            </button>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="progressChart" aria-label="Weight progress chart"></canvas>
+          </div>
+        </section>
+
+        <section class="side-column">
+         
+          <div class="card step-card">
+            <header class="card-header">
+              <h2>
+                <i class="fa-solid fa-shoe-prints"></i>
+                Step Counter Simulator
+              </h2>
+              <p>Playfully visualize your daily movement.</p>
+            </header>
+            <div class="step-display">
+              <span id="stepCount" class="step-value">0</span>
+              <span class="step-label">Simulated steps today</span>
+            </div>
+            <div class="step-controls">
+              <div class="form-group">
+                <label for="stepSpeed">Simulation Speed</label>
+                <input type="range" id="stepSpeed" min="1" max="5" value="3" />
+                <p class="range-labels">
+                  <span>Slow</span>
+                  <span>Fast</span>
+                </p>
+              </div>
+              <div class="button-row">
+                <button id="startSteps" class="primary-button small">
+                  <i class="fa-solid fa-play"></i>
+                  Start
+                </button>
+                <button id="stopSteps" class="secondary-button small">
+                  <i class="fa-solid fa-pause"></i>
+                  Pause
+                </button>
+                <button id="resetSteps" class="secondary-button ghost small">
+                  <i class="fa-solid fa-rotate"></i>
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="card recipe-card">
+            <header class="card-header">
+              <h2>
+                <i class="fa-solid fa-blender"></i>
+                Healthy Recipe Ideas
+              </h2>
+              <p>Quick, nutrient-dense meals you can try.</p>
+            </header>
+            <div id="recipesContainer" class="recipe-grid">
+           
+            </div>
+            <button id="newRecipesBtn" class="secondary-button expanded">
+              <i class="fa-solid fa-rotate"></i>
+              Shuffle Recipes
+            </button>
+          </div>
+
+          <div class="card download-card">
+            <header class="card-header">
+              <h2>
+                <i class="fa-solid fa-file-arrow-down"></i>
+                Download Your Plan
+              </h2>
+              <p>Generate a printable version of your current plan.</p>
+            </header>
+            <p class="download-info">
+              This is a front-end only simulation. When you click the button below,
+              we’ll open the browser’s print dialog so you can save your plan as PDF.
+            </p>
+            <button id="downloadPdfBtn" class="primary-button expanded">
+              <i class="fa-solid fa-file-pdf"></i>
+              Download as PDF
+            </button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+  
+    <footer class="footer">
+      <p>
+        Built with ❤️ for the
+        <span class="accent">Front-End Hackathon</span> using
+        <span>HTML</span>, <span>CSS</span>, and <span>JavaScript</span>.
+      </p>
+      <p class="footer-sub">
+        Tip: Showcase dark/light mode, progress chart, and localStorage features to the judges.
+      </p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
